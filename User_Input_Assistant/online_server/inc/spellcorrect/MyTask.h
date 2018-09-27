@@ -40,7 +40,7 @@ public:
 class Cache;//Cache缓存
 class MyTask
 {
-public:
+	public:
 	MyTask(const std::string &queryWord,const wd::TcpConnectionPtr &conn);
 	int min();
 	void execute();
@@ -54,7 +54,7 @@ private:
 
 	void statistic(std::set<int> &iset);
 
-	int distance(const std::string &rhs);
+	int distance(const std::string &rhs);//最小编辑距离
 
 	void response(Cache &cache);
 

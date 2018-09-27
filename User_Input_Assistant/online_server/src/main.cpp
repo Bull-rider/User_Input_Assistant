@@ -14,6 +14,7 @@ using std::stoi;
 
 int  main()
 {
+	//这里的初始化及其重要，没有它什么都没有
 	Singleton<Configuration>::getInstance()->init("../conf/config");
 	Singleton<Mydict>::getInstance()->init(
 			Singleton<Configuration>::getInstance()->getMap()["dict"],

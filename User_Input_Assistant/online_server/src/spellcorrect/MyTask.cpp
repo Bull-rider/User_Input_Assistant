@@ -30,6 +30,7 @@ MyTask::MyTask(const string &queryWord,const wd::TcpConnectionPtr &conn)
 :_queryWord(queryWord)
 ,_conn(conn)
 {
+	//通过单例模式创建一个Mydict类型的对象,并获得词典
 	auto dict=Singleton<Mydict>::getInstance()->getDict();
 	int bit_len=dict.size();
 	_bit_array=new bool[bit_len];
@@ -82,6 +83,7 @@ vector<string> MyTask::getChar(const string &word)
 //在索引表中查询
 void MyTask::queryIndexTable()
 {
+	//通过单例对象创建Mydict类型的对象并拿到索引表
 	unordered_map<string,set<int>> index_table=Singleton<Mydict>::getInstance()->getIndexTable();
 	//得到一个字符作为key
 	vector<string> char_list=getChar(_queryWord);//getChar()函数
@@ -97,6 +99,7 @@ void MyTask::queryIndexTable()
 //上面拿到的是与字符相关联单词在容器中的下标，我们通过下标从词典中拿到单词
 void MyTask::statistic(set<int> &iset)
 {
+	//set中存放的是单词在容器中的下标
 	auto dict=Singleton<Mydict>::getInstance()->getDict();//得到存放词典的容器
 	for(auto idx:iset)
 	{
@@ -116,8 +119,8 @@ void MyTask::statistic(set<int> &iset)
 //计算最小编辑距离
 int MyTask::distance(const string &rhs)
 {
-	vector<string> querry=getChar(_queryWord);
-	vector<string> candidata=getChar(rhs);
+	vector<string> querry=getChar(_queryWord);//查询词经过UTF-8编码处理
+	vector<string> candidata=getChar(rhs);//候选词也通过UTF-8编码处理
 	int len1,len2;
 	len1=querry.size();
 	len2=candidata.size();
@@ -161,12 +164,12 @@ int MyTask::min(int a,int b,int c)
 //下次再搜索是先在Cache中搜索，加快检索速度
 void MyTask::response(Cache &cache)
 {
-	if(_resultQue.empty())
+	if(_resultQue.empty())//如果结果队列为空，返回空
 	{
 		string result=" ";
 		_conn->sendInLoop(result);
 	}
-	else
+	else//结果队列非空，把结果封装成Json类型返回给用户
 	{
 		Json::FastWrite writer;
 		Json::Value array;

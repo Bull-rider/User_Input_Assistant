@@ -17,7 +17,7 @@ using std::endl;
 using std::string;
 using std::getline;
 
-bool Configuration::init(std::string &filename)
+bool Configuration::init(std::string &filename)//这里传进去的路径，我们在主函数中传递
 {
 	ifstream ifs(filename.c_str());
 	if(!ifs)
