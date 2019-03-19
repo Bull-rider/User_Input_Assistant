@@ -34,8 +34,8 @@ Configuration::Configuration(const string &filepath)
 		is>>path;
 		_configMap.insert(std::make_pair(key,path));
 	}
-	map<string,string> &Configuration::getCongigMap()
-	{
-		return _configMap;
-	}
+}
+map<string,string> &Configuration::getCongigMap()
+{
+	return _configMap;
 }
